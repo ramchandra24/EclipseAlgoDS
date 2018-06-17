@@ -6,6 +6,7 @@
 // Description : Hello World in C++, Ansi-style
 //============================================================================
 
+
 #include <iostream>
 #include <climits>
 
@@ -40,6 +41,7 @@ NODE * addNode(int data){
 	nd->right = NULL;
 	return nd;
 }
+
 
 int main(){
 	NODE * root = addNode(2);
