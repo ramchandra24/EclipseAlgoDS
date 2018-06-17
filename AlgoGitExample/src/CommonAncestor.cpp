@@ -57,8 +57,8 @@ NODE * ShortestCommonAncestor(NODE * root, int a, int b) {
 
 /*
  * 		   4
- * 		 3    6
- * 		2	 5  7
+ * 		 3   6
+ * 		2	5  7
  */
 
 
