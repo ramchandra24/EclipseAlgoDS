@@ -22,6 +22,7 @@ bool isBSTUtil(NODE * root, int min, int max){
 	if(NULL == root)
 		return true;
 
+	// cout << "data: " << root->data << " :: min: " << min << " :: max: " << max << endl;
 	if(root->data < min || root->data > max)
 		return false;
 
