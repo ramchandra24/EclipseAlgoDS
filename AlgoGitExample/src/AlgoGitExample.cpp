@@ -25,7 +25,7 @@ bool isBSTUtil(NODE * root, int min, int max){
 	if(root->data < min || root->data > max)
 		return false;
 
-	return (isBSTUtil(root->left, min, root->data) & isBSTUtil(root->right, max, root->data));
+	return (isBSTUtil(root->left, min, root->data) & isBSTUtil(root->right, root->data, max));
 }
 
 bool isBST(NODE * root){
@@ -45,7 +45,7 @@ int main(){
 	root->left = addNode(5);
 	root->right = addNode(6);
 
-	cout << "isBST : " << isBST(root) << endl;
+	cout << "isBST : " << (isBST(root) ? "true" : "false") << endl;
 
 	return 0;
 }
