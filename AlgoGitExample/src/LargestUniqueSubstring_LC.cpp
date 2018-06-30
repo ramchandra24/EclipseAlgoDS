@@ -6,34 +6,32 @@
  */
 
 #include <iostream>
+#include <vector>
 
 using namespace std;
 
-void calcMaxAndClearLength(int *alpha, int &maxLen, int makeOne){
-	int len = 0;
-	for(int i=0; i<26; ++i){
-		len += alpha[i];
-		alpha[i] = 0;
-	}
-	if(len > maxLen){
-		maxLen = len;
-	}
-	alpha[makeOne] = 1;
-}
-
 int lengthOfLongestSubstring(string s) {
-	int alpha[26] = {0};
-	int maxLen = 0;
-	for(int i=0; i<s.length(); ++i){
-		if (alpha[s[i]-'a'] > 0) {
-			calcMaxAndClearLength(alpha, maxLen, (s[i]-'a'));
-		}
-		else {
-		   alpha[s[i]-'a'] = 1;
-		}
-	}
-	return maxLen;
-}
+     vector<char> charVec;
+     int maxLen = 0;
+     for(int i=0; i<s.length(); ++i) {
+         if(find(charVec.begin(), charVec.end(), s[i]) != charVec.end()) {
+             if(maxLen < charVec.size()){
+                 maxLen = charVec.size();
+             }
+             while(s[i] != charVec[0])
+                 charVec.erase(charVec.begin());
+             charVec.erase(charVec.begin());
+             charVec.push_back(s[i]);
+         }
+         else {
+             charVec.push_back(s[i]);
+         }
+     }
+     if(maxLen < charVec.size()) {
+         maxLen = charVec.size();
+     }
+     return maxLen;
+ }
 
 int main(){
 
