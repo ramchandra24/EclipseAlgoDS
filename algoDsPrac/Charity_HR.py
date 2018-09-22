@@ -1,4 +1,5 @@
-
+# 3 names - A, B, C
+# add new number to lowest number in the current operation
 def charity(arr):
     
     l = len(arr)
