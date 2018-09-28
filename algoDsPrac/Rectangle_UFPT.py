@@ -22,7 +22,7 @@ def csorte(a):
             continue
         lst.append(i)
         lst.append(i)
-        if c[i] > 4:
+        if c[i] >= 4:
             lst.append(i)
             lst.append(i)
     return lst
