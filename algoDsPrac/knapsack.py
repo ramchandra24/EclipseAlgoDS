@@ -25,4 +25,4 @@ wt = [10, 20, 30]
 
 kpobj = kpsac(val, wt)
 kret = kpobj.knapsack(60)
-print kret
+print "Maximum value : ", kret
