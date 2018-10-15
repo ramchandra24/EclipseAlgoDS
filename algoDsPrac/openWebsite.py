@@ -10,4 +10,4 @@ filename = os.path.join(here, "filename.txt")
 with open(filename, "r") as fil:
     all_lines = fil.readlines()
     for url in all_lines:
-        webbrowser.open(url, new=2)
+        webbrowser.get(chrome_path).open(url, new=2)
