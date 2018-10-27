@@ -1,5 +1,10 @@
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
 using namespace std;
+
+/*
+ * Check the sum of current input element with top of the stack.
+ * If they add up to even, don't push the current element and pop the top element
+*/
 
 int main(){
 
