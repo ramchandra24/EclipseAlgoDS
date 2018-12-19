@@ -27,8 +27,8 @@ public:
         int sol = 0;
         std::map<vector<int>, int> m;
 
-        for(int i = 0; i < twos.size() - nums.size(); ++i) {
-            for(int j = i + nums.size(); j < twos.size(); ++j) {
+        for(int i = 0; i < twos.size(); ++i) {
+            for(int j = 1 + nums.size() - i; j < twos.size(); ++j) {
                 if ( twos[i].getsum() + twos[j].getsum() == target ) {
                     cout << "found target" << endl;
                     cout << twos[i].geti() << " : " << twos[i].getj() << " :: ";
@@ -36,6 +36,15 @@ public:
                     cout << "numbers : " << endl;
                     cout << nums[twos[i].geti()] << " : " << nums[twos[i].getj()] << " :: ";
                     cout << nums[twos[j].geti()] << " : " << nums[twos[j].getj()] << endl;
+                    vector<int> ind;
+                    ind.push_back(twos[i].geti());
+                    ind.push_back(twos[i].getj());
+                    ind.push_back(twos[j].geti());
+                    ind.push_back(twos[j].getj());
+                    sort(ind.begin(), ind.end());
+                    if(ind[0] == ind[1] || ind[1] == ind[2] || ind[2] == ind[3]) {
+                        continue;
+                    }
                     vector<int> s;
                     s.push_back(nums[twos[i].geti()]);
                     s.push_back(nums[twos[i].getj()]);
@@ -59,7 +68,7 @@ public:
     }
     vector<node> twosums(vector<int> const& nums) {
         vector<node> res;
-        for(int j = 0; j < nums.size(); ++j) {
+        for(int j = 0; j < nums.size()-1; ++j) {
             for(int i = j+1; i < nums.size(); ++i ) {
                 res.push_back(node(j, i, nums[i] + nums[j]));
             }
@@ -92,7 +101,7 @@ public:
 
 int main() {
     Solution s;
-    vector<int> inp = {1,0,-1,0,-2,2};
+    vector<int> inp = {-3,-2,-1,0,0,1,2,3};
     vector<vector<int>> sol = s.fourSum(inp, 0);
     s.printresult(sol);
     return 0;
