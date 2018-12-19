@@ -21,35 +21,30 @@ public:
         vector<vector<int>> res;
         sort(nums.begin(), nums.end());
         vector<node> twos = twosums(nums);
-        //sort(twos.begin(), twos.end());
-        printnodes(twos);
-        cout << endl;
+        vector<node> row = twos;
+        vector<node> col = twos;
         int sol = 0;
         std::map<vector<int>, int> m;
 
-        for(int i = 0; i < twos.size(); ++i) {
-            for(int j = 1 + nums.size() - i; j < twos.size(); ++j) {
-                if ( twos[i].getsum() + twos[j].getsum() == target ) {
-                    cout << "found target" << endl;
-                    cout << twos[i].geti() << " : " << twos[i].getj() << " :: ";
-                    cout << twos[j].geti() << " : " << twos[j].getj() << endl;
-                    cout << "numbers : " << endl;
-                    cout << nums[twos[i].geti()] << " : " << nums[twos[i].getj()] << " :: ";
-                    cout << nums[twos[j].geti()] << " : " << nums[twos[j].getj()] << endl;
+        for(int i = 0; i < row.size(); ++i) {
+            for(int j = i + 1; j < col.size(); ++j) {
+                if ( row[i].getsum() + col[j].getsum() == target ) {
+                    cout << nums[row[i].geti()] << " : " << nums[row[i].getj()] << " :: ";
+                    cout << nums[col[j].geti()] << " : " << nums[col[j].getj()] << endl;
                     vector<int> ind;
-                    ind.push_back(twos[i].geti());
-                    ind.push_back(twos[i].getj());
-                    ind.push_back(twos[j].geti());
-                    ind.push_back(twos[j].getj());
+                    ind.push_back(row[i].geti());
+                    ind.push_back(row[i].getj());
+                    ind.push_back(col[j].geti());
+                    ind.push_back(col[j].getj());
                     sort(ind.begin(), ind.end());
                     if(ind[0] == ind[1] || ind[1] == ind[2] || ind[2] == ind[3]) {
                         continue;
                     }
                     vector<int> s;
-                    s.push_back(nums[twos[i].geti()]);
-                    s.push_back(nums[twos[i].getj()]);
-                    s.push_back(nums[twos[j].geti()]);
-                    s.push_back(nums[twos[j].getj()]);
+                    s.push_back(nums[row[i].geti()]);
+                    s.push_back(nums[row[i].getj()]);
+                    s.push_back(nums[col[j].geti()]);
+                    s.push_back(nums[col[j].getj()]);
                     sort(s.begin(), s.end());
                     if (m.find(s) == m.end()) {
                         res.push_back(s);
@@ -57,13 +52,8 @@ public:
                         sol++;
                     }
                 }
-                else {
-                    cout << i << " :: " << j << endl;
-                }
             }
-            cout << endl;
         }
-
         return res;
     }
     vector<node> twosums(vector<int> const& nums) {
