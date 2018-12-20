@@ -23,34 +23,12 @@ public:
         tail = head;
         head = head->next;
 
-        do {
+        while (head) {
             tail->next = swappair(head);
             tail = head;
             head = head->next;
-        } while (head);
-
-        while(head) {
-#if 0
-            nnxt = NULL;
-            nxt = head->next;
-            if (nxt) {
-                nnxt = nxt->next;
-            }
-            if (curhead) {
-                curhead->next = head;
-            }
-            head->next = nnxt;
-            if (nxt) {
-                nxt->next = head;
-            }
-            curhead = head;
-            head = head->next;
-            //if (nnxt) {
-            //    nxt = nnxt->next;
-            //}
-#endif
-
         }
+
         return nhead;
     }
 
@@ -89,11 +67,11 @@ int main() {
     ListNode l3 = ListNode(30);
     ListNode l4 = ListNode(40);
     ListNode l5 = ListNode(50);
-    //ListNode l6 = ListNode(60);
-    //ListNode l7 = ListNode(70);
+    ListNode l6 = ListNode(60);
+    ListNode l7 = ListNode(70);
     l1.next = &l2;
     l2.next = &l3;
-    //l3.next = &l4;
+    l3.next = &l4;
     //l4.next = &l5;
     //l5.next = &l6;
     //l6.next = &l7;
