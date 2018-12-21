@@ -10,7 +10,15 @@ public:
             --i;
         }
         if (i > 0 && nums[i] > nums[i-1]) {
-            swapnums(nums, i, i-1);
+            int j = i+1;
+            int max = i;
+            while (j < nums.size()) {
+                if ((nums[j] < nums[max]) && (nums[j] > nums[i-1])) {
+                    max = j;
+                }
+                ++j;
+            }
+            swapnums(nums, max, i-1);
             sort(nums.begin() + i, nums.end());
         }
         else {
@@ -34,7 +42,7 @@ public:
 
 int main() {
     Solution s;
-    vector<int> nums = {3, 4, 3, 1, 5, 7, 9, 8};
+    vector<int> nums = {3, 2, 2};
     s.printvec(nums);
     s.nextPermutation(nums);
     s.printvec(nums);
