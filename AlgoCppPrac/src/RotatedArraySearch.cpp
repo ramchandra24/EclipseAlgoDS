@@ -9,15 +9,17 @@ public:
         int r = nums.size() - 1;
         int last = nums.size() - 1;
         int res = -1;
-        while (l < r) {
+        while (l <= r) {
             int mid = l + (r - l) / 2;
+            cout << mid << endl;
+            cout << "num : " << nums[mid] << endl;
             if (nums[mid] == target) {
                 return mid;
             }
             if (nums[mid] < target) {
                 // decreasing part
                 if (nums[mid] < nums[0]) {
-                    if (target > nums[0]) {
+                    if (target >= nums[0]) {
                        r = mid - 1;
                     }
                     else {
@@ -30,7 +32,7 @@ public:
             }
             else {
                 if (nums[mid] > nums[last]) {
-                    if (target < nums[last]) {
+                    if (target <= nums[last]) {
                        l = mid + 1;
                     }
                     else {
@@ -42,9 +44,6 @@ public:
                 }
             }
         }
-        if (l == r) {
-            return l;
-        }
         return res;
     }
 };
@@ -52,8 +51,8 @@ public:
 int main() {
 
     Solution s;
-    vector<int> nums = {10, 11, 12, 13, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
-    cout << s.search(nums, 13) << endl;
+    vector<int> nums = {5, 1, 3};//{10, 11, 12, 13, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
+    cout << s.search(nums, 5) << endl;
 
     return 0;
 }
