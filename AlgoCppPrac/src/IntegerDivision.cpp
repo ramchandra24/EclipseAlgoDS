@@ -6,30 +6,40 @@ class Solution {
 public:
     int divide(int dividend, int divisor) {
         int sign = (dividend < 0) ^ (divisor < 0) ? -1 : 1;
-        dividend = abs(dividend);
-        divisor = abs(divisor);
+        cout << "sign : " << sign << endl;
+        unsigned long long divi = llabs((long long)dividend);
+        unsigned long long div = llabs((long long)divisor);
 
         unsigned long long q = 0;
-        unsigned long long temp = 0L;
+        unsigned long long temp = 0ULL;
         for(int i = 31; i >= 0; --i) {
-            if ((temp + ((unsigned long long)(divisor) << i)) <= dividend) {
+            if ((temp + ((div) << i)) <= divi) {
                 cout << "i : " << i << endl;
-                temp += (unsigned long long)(divisor << i);
+                temp += (div<< i);
                 q |= 1 << i;
             }
         }
-        cout << q << endl;
+
+        int res;
         if (q > INT_MAX) {
-            q = INT_MAX;
+            if (sign == 1) {
+                res = INT_MAX;
+            }
+            else {
+                res = INT_MIN;
+            }
         }
-        return sign * q;
+        else {
+            res = (int)q * sign;
+        }
+        return res;
     }
 };
 
 int main() {
     Solution s;
     int q = 1;
-    cout << s.divide(INT_MIN, -1) << endl;
+    cout << s.divide(-2147483648, 1) << endl;
     cout << "qu : " << q << endl;
     return 0;
 }
