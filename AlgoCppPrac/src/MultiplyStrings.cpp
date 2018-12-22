@@ -23,8 +23,9 @@ public:
                 carry += res[i + j] / 10;
                 res [i + j] = res[i + j] % 10;
             }
-            res[i + j] += carry % 10;
-            res[i + j] += carry / 10;
+            if (carry > 0) {
+                res[i + j] += carry;
+            }
         }
         printvec(res);
         string result;
@@ -43,7 +44,11 @@ public:
 
     string strrev(string s) {
         string res;
-        for (int i = s.size() - 1; i >= 0; --i) {
+        int i = s.size() - 1;
+        while (s[i] == '0') {
+            --i;
+        }
+        for (; i >= 0; --i) {
             res += s[i];
         }
         return res;
@@ -55,7 +60,7 @@ public:
 int main() {
     Solution s;
 
-    string res = s.multiply("99666666444449", "99432222222879");
+    string res = s.multiply("1002", "110005");
     cout << res << endl;
     return 0;
 }
