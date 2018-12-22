@@ -36,16 +36,22 @@ public:
             }
         }
 #endif
-        vector<vector<int>> res;
+        set<vector<int>> res;
         vector<int> cvec;
         int sum = 0;
         sort(candidates.begin(), candidates.end());
         recursiveTargetSearch(res, candidates, &cvec, sum, 0, target);
-        return res;
+
+        vector<vector<int>> result;
+        for (auto it = res.begin(); it != res.end(); ++it) {
+            result.push_back(*it);
+        }
+
+        return result;
     }
 
 
-    void recursiveTargetSearch(vector<vector<int>> &res, vector<int> const& n, vector<int>* c, int sum, int l, int target) {
+    void recursiveTargetSearch(set<vector<int>> &res, vector<int> const& n, vector<int>* c, int sum, int l, int target) {
 
         for (int i = 0; i < n.size(); ++i) {
             //cout << " I : " << i << " :: " << sum << endl;
@@ -64,51 +70,15 @@ public:
                 //cout << "found" << endl;
                 sum += n[i];
                 c->push_back(n[i]);
-                res.push_back(*c);
+                vector<int> cpy(*c);
+                sort(cpy.begin(), cpy.end());
+                res.insert(cpy);
+                //res.push_back(*c);
                 c->pop_back();
                 //printvec(c);
             }
             //cout << "end of for" << endl;
         }
-
-
-#if 0
-
-
-
-
-        for (int i = l; i < c.size(); ++i) {
-            for (int j = 0; j < c.size(); ++j) {
-
-                while (sum + n[j] < target) {
-                    c.push_back(n[j]);
-                    sum += n[j];
-                }
-                if (sum + n[j] == target) {
-                    c.push_back(n[j]);
-                    res.push_back(c);
-                    c.clear();
-                    //c.pop_back();
-                }
-                else {
-                    ++j;
-                }
-
-
-                if (sum + n[l] <= target) {
-                   c.push_back(n[l]);
-                   sum += n[l];
-                   if (sum == target) {
-                       res.push_back(c);
-                   }
-                }
-                else {
-                    return;
-                }
-                recursiveTargetSearch(res, n, c, sum, i+1, target);
-            }
-        }
-#endif
     }
 
 
@@ -132,7 +102,7 @@ public:
 int main() {
     Solution s;
     //vector<int> b = {1, 3, 7, 2, 5, 4, 9, 12};
-    vector<int> b = {2, 3, 4, 5};
+    vector<int> b = {1, 3, 4, 5, 8};
     vector<vector<int>> res = s.combinationSum(b, 8);
     s.printmat(res);
     return 0;
