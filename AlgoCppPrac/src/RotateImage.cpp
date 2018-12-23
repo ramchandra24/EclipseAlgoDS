@@ -4,21 +4,6 @@ using namespace std;
 class Solution {
 public:
     void rotate(vector<vector<int>>& matrix) {
-#if 0
-        for (int i = 0; i < matrix.size(); ++i) {
-            for (int j = 0; j < matrix[i].size(); ++j) {
-                if (i <= j) {
-                    int newpos = j * matrix[i].size() + (matrix[i].size() - i);
-                    cout << newpos << endl;
-                    int newi = newpos / (matrix[i].size() + 1);
-                    int newj = newpos % (matrix[i].size() + 1);
-                    cout << "i : j " << i << " : " << j ;
-                    cout << " newi : newj " << newi << " : " << newj << endl;
-                    matrix[newi][newj] = matrix[i][j];
-                }
-            }
-        }
-#endif
         cout << "rotating" << endl;
         int sz = matrix.size() - 1;
         for (int i = 0; i < sz; ++i) {
