@@ -15,6 +15,7 @@ public:
         if (head == NULL) {
             return head;
         }
+        k = k % listLength(head);
         for (int i = 0; i < k; ++i) {
             ktemp = ktemp->next;
             if (ktemp == NULL) {
@@ -45,6 +46,16 @@ public:
         }
         cout << endl;
     }
+
+    int listLength(ListNode* head) {
+        int len = 0;
+        while (head) {
+            head = head->next;
+            ++len;
+        }
+        return len;
+    }
+
 };
 
 
