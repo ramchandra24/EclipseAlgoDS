@@ -7,31 +7,49 @@ public:
         if (board.size() < 1) {
             return false;
         }
+        bool res = false;
         vector<vector<int>> vis(board.size(), vector<int>(board[0].size(), 0));
-        dfs(board, vis, 0, 0);
-        printMat(vis);
-        return false;
-    }
-
-    void dfs(vector<vector<char>> const& board, vector<vector<int>>& vis, int i, int j) {
-        //cout << "dfs on : " << i << " " << j << endl;
-        if (!visited(vis, i, j)) {
-            for (int k = 0 ; k < 3 ; ++k) {
-                int ni, nj;
-                int trn = 1 << k;
-                if (!(vis[i][j] & trn)) {
-                    vis[i][j] |= trn;
-                    tuple<int, int> turn = getNextNode(board, i, j, trn);
-                    ni = get<0>(turn);
-                    nj = get<1>(turn);
-                    if (-1 == ni || -1 == nj) {
-                        continue;
+        for (int i = 0; i < board.size(); ++i) {
+            for (int j = 0; j < board[i].size(); ++j) {
+                if (board[i][j] == word[0]) {
+                    dfs(board, vis, i, j, word, 0, res);
+                    if (res) {
+                        break;
                     }
-                    markTurn(vis, ni, nj, trn);
-                    printMat(vis);
-                    dfs(board, vis, ni, nj);
                 }
             }
+        }
+        return res;
+    }
+
+    void dfs(vector<vector<char>> const& board, vector<vector<int>>& vis, int i, int j, string word, int index, bool &res) {
+        //cout << "dfs on : " << i << " " << j << endl;
+        if (index == word.length()) {
+            res = true;
+            return;
+        }
+        if (!visited(vis, i, j)) {
+            if (board[i][j] == word[index]) {
+                for (int k = 0 ; k < 3 ; ++k) {
+                    int ni, nj;
+                    int trn = 1 << k;
+                    if (!(vis[i][j] & trn)) {
+                        vis[i][j] |= trn;
+                        tuple<int, int> turn = getNextNode(board, i, j, trn);
+                        ni = get<0>(turn);
+                        nj = get<1>(turn);
+                        if (-1 == ni || -1 == nj) {
+                            continue;
+                        }
+                        markTurn(vis, ni, nj, trn);
+                        printMat(vis);
+                        dfs(board, vis, ni, nj, word, index+1, res);
+                    }
+                }
+            }
+            //else {
+             //   vis[i][j] |= 2;
+            //}
         }
     }
 
@@ -111,7 +129,7 @@ int main() {
     };
     Solution s;
     s.printMat(board);
-    cout << s.exist(board, "SEED");
+    cout << s.exist(board, "ABCCED");
 
     return 0;
 }
