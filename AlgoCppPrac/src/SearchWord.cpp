@@ -8,62 +8,58 @@ public:
             return false;
         }
         bool res = false;
-        vector<vector<int>> vis(board.size(), vector<int>(board[0].size(), 0));
+
         for (int i = 0; i < board.size(); ++i) {
             for (int j = 0; j < board[i].size(); ++j) {
                 if (board[i][j] == word[0]) {
-                    dfs(board, vis, i, j, word, 0, res);
+                    vector<vector<bool>> vis(board.size(), vector<bool>(board[0].size(), false));
+                    res = dfs(board, vis, i, j, word, 0);
                     if (res) {
                         break;
                     }
                 }
             }
+            if (res) {
+                break;
+            }
         }
         return res;
     }
 
-    void dfs(vector<vector<char>> const& board, vector<vector<int>>& vis, int i, int j, string word, int index, bool &res) {
+    bool dfs(vector<vector<char>> const& board, vector<vector<bool>>& vis, int i, int j, string word, int index) {
         //cout << "dfs on : " << i << " " << j << endl;
-        if (index == word.length()) {
-            res = true;
-            return;
-        }
-        if (!visited(vis, i, j)) {
+        vis[i][j] = true;
+        bool res = false;
+
+        if (index >= word.length()-1) {
             if (board[i][j] == word[index]) {
-                for (int k = 0 ; k < 3 ; ++k) {
+                return true;
+            }
+        }
+        else {
+            if (board[i][j] == word[index]) {
+                printMat(vis);
+                for (int k = 0 ; k < 4 ; ++k) {
                     int ni, nj;
                     int trn = 1 << k;
-                    if (!(vis[i][j] & trn)) {
-                        vis[i][j] |= trn;
-                        tuple<int, int> turn = getNextNode(board, i, j, trn);
-                        ni = get<0>(turn);
-                        nj = get<1>(turn);
-                        if (-1 == ni || -1 == nj) {
-                            continue;
+                    tuple<int, int> turn = getNextNode(board, i, j, trn);
+                    ni = get<0>(turn);
+                    nj = get<1>(turn);
+                    if (-1 == ni || -1 == nj) {
+                        continue;
+                    }
+                    if (!vis[ni][nj]) {
+                        res |= dfs(board, vis, ni, nj, word, index+1);
+                        if (res) {
+                            return res;
                         }
-                        markTurn(vis, ni, nj, trn);
-                        printMat(vis);
-                        dfs(board, vis, ni, nj, word, index+1, res);
+                        vis[ni][nj] = false;
+                        //return res;
                     }
                 }
             }
-            //else {
-             //   vis[i][j] |= 2;
-            //}
         }
-    }
-
-    void markTurn(vector<vector<int>>& v, int i, int j, int turn) {
-        switch(turn) {
-        case 1:
-            v[i][j] |= 2;
-            break;
-        case 2:
-            v[i][j] |= 1;
-            break;
-        default :
-            break;
-        }
+        return res;
     }
 
     tuple<int, int> getNextNode(vector<vector<char>> const& board, int i, int j, int turn) {
@@ -87,24 +83,16 @@ public:
                 return nTurn;
             }
             break;
+        case 8:
+            --i;
+            if (i < 0) {
+                return nTurn;
+            }
+            break;
         default:
             return nTurn;
         }
         return (make_tuple(i, j));
-    }
-
-    void markLeft(vector<vector<int>> &v, int i, int j) {
-        v[i][j] |= 1 << 0;
-    }
-    void markRight(vector<vector<int>> &v, int i, int j) {
-        v[i][j] |= 1 << 1;
-    }
-    void markDown(vector<vector<int>> &v, int i, int j) {
-        v[i][j] |= 1 << 2;
-    }
-
-    bool visited(vector<vector<int>> const &v, int i, int j) {
-        return (v[i][j] == 0x7);
     }
 
     template <typename T>
@@ -122,14 +110,17 @@ public:
 int main() {
 
     vector<vector<char>> board =
-    {
+    /*{
             {'A','B','C','E'},
-            {'S','F','C','S'},
+            {'S','F','E','S'},
             {'A','D','E','E'}
+    };*/
+    {
+            {'A','B','C','E'}, {'S','F','E','S'}, {'A','D','E','E'}
     };
     Solution s;
     s.printMat(board);
-    cout << s.exist(board, "ABCCED");
+    cout << s.exist(board, "ABC");
 
     return 0;
 }
