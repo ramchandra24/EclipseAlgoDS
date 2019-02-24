@@ -12,15 +12,21 @@ class Solution {
 public:
     ListNode* reverseBetween(ListNode* head, int m, int n) {
         ListNode* temp = head;
-        int count = 0;
-        while (temp && count++ < m-1) {
+        ListNode* prev = NULL;
+        int count = 1;
+        while (temp && count++ < m) {
+            prev = temp;
             temp = temp->next;
         }
-        if (count < m-1) {
+        if (count < m) {
             return head;
         }
-        ListNode* first, *last;
-        temp->next = reverseLL(temp->next, (n-m));
+        if (prev == NULL) {
+            head = reverseLL(temp, (n-m));
+        }
+        else {
+            prev->next = reverseLL(temp, (n-m));
+        }
 
         return head;
     }
@@ -69,11 +75,11 @@ int main() {
 
     head->next = a;
     a->next = b;
-    b->next = c;
+    //b->next = c;
     c->next = d;
 
     Solution s;
-    s.reverseBetween(head, 2, 2);
+    head = s.reverseBetween(head, 1, 5);
     s.printNodes(head);
 
     return 0;
