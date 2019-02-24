@@ -4,54 +4,34 @@ using namespace std;
 class Solution {
 public:
     int numDecodings(string s) {
-        char a[26];
-        for (int i = 0; i < 26; ++i) {
-            a[i] = 'A' + i;
+        int *dp = new int[s.length() + 1];
+        for (int i = 0; i <= s.length(); ++i) {
+            dp[i] = 0;
         }
-        string test = "";
-        set<string> res;
-        decodeUtil(res, a, s, test, 0);
-        printRes(res);
-        return res.size();
-    }
-
-    void printRes(set<string> s) {
-        for (auto v : s) {
-            cout << v << endl;
+        if (s.length() == 0 || s == "") {
+            return 0;
         }
-    }
-
-    void decodeUtil(set<string>& res, char const a[26], string s, string test, int l) {
-
-        if (l >= s.length()) {
-            string cp (test);
-            sort(cp.begin(), cp.end());
-            res.insert(cp);
-            //ans = res.size();
-            return;
-        }
-
-        for (int i = l; i < s.length(); ++i) {
-            test += a[s[i] - '0' - 1];
-            cout << "before test " << test << endl;
-            decodeUtil(res, a, s, test, i + 1);
-            test.erase(test.length() - 1);
-            cout << "after test " << test << endl;
-            if (i < s.length() - 1) {
-                int v = (s[i] - '0') * 10 + (s[i + 1] - '0') - 1;
-                test += a[v];
-                decodeUtil(res, a, s, test, i + 2);
-                test.erase(test.length() - 1);
+        dp[0] = 1;
+        dp[1] = s[0] == '0' ? 0 : 1;
+        for (int i = 2; i <= s.length(); ++i) {
+            if (s[i-1] != '0') {
+                dp[i] += dp[i-1];
+            }
+            if (((s[i-2] - '0') * 10 + (s[i-1] - '0')) >= 10 &&
+                    ((s[i-2] - '0') * 10 + (s[i-1] - '0')) <= 26) {
+                dp[i] += dp[i-2];
             }
         }
+        int ans = dp[s.length()];
+        delete[] dp;
+        return ans;
     }
-
 };
 
 int main() {
 
     Solution s;
-    s.numDecodings("226");
+    cout << s.numDecodings("12") << endl;
     return 0;
 }
 
