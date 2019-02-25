@@ -52,8 +52,11 @@ public:
             ipPart = ipPart * 10 + (s[i] - '0');
         }
         res = ipPart;
-        if (part == 0) {
-            return ((ipPart > 0) && (ipPart <= 255));
+        if (ipPart > 0 && s[0] == '0') {
+            return false;
+        }
+        else if (ipPart == 0 && s.length() > 1) {
+            return false;
         }
         return ((ipPart >= 0) && (ipPart <= 255));
     }
@@ -69,7 +72,7 @@ public:
 
 int main() {
     Solution s;
-    vector<string> res = s.restoreIpAddresses("25525519231");
+    vector<string> res = s.restoreIpAddresses("25525511135");
     s.printvec(res);
     return 0;
 }
