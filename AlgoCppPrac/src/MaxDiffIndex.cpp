@@ -5,6 +5,9 @@ class Solution {
 public:
     tuple<int, int> getMaxDiff(vector<int> arr) {
         tuple<int, int> index(-1, -1);
+        if (arr.size() < 1) {
+            return index;
+        }
         int lindex = arr.size() - 1;
         int sindex = lindex;
         int maxdiff = arr[lindex] - arr[sindex];
