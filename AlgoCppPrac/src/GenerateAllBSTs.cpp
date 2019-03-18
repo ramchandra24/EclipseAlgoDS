@@ -12,6 +12,9 @@ class Solution {
 public:
     vector<TreeNode*> generateTrees(int n) {
         vector<TreeNode*> res;//(n);
+        if (n < 1) {
+            return res;
+        }
         res = generateTreesUtil(1, n);
 
         return res;
