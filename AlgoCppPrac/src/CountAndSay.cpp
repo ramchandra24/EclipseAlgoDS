@@ -21,11 +21,7 @@ public:
                 freq = 1;
             }
         }
-        if (curr_digit >= 0) {
-            result +=  std::to_string(freq * 10 + curr_digit);
-        } else {
-            result +=  std::to_string(freq * 10 + prev_digit);
-        }
+        result +=  std::to_string(freq * 10 + prev_digit);
         return result;
     }
     
@@ -43,6 +39,6 @@ public:
 
 int main() {
     Solution s;
-    std::cout << s.countAndSay(5);
+    std::cout << s.countAndSay(7);
     return 0;
 }
