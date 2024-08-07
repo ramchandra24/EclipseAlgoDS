@@ -17,30 +17,27 @@ class Solution {
 public:
     ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
     int carry = 0;
-    ListNode* result = nullptr;
-    ListNode* tail_node = nullptr;
+    ListNode* head = nullptr;
+    ListNode* tail = nullptr;
     while (l1 != nullptr || l2 != nullptr) {
-        int left = l1 != nullptr ? l1->val : 0;
-        int right = l2 != nullptr ? l2->val : 0;
-        int sum = left + right + carry;
-        int next_number = sum % 10;
+        int left_digit = l1 != nullptr ? l1->val : 0;
+        int right_digit = l2 != nullptr ? l2->val : 0;
+        int sum = left_digit + right_digit + carry;
+        int digit = sum % 10;
         carry = sum / 10;
-        if (result == nullptr) {
-            result = tail_node = new ListNode(next_number);
+        if (tail == nullptr) {
+            head = tail = new ListNode(digit);
         } else {
-            // static_assert(tail_node != nullptr);
-            tail_node->next = new ListNode(next_number);
+            tail->next = new ListNode(digit);
+            tail = tail->next;
         }
         l1 = l1 != nullptr? l1->next: nullptr;
         l2 = l2 != nullptr? l2->next : nullptr;
-        if (tail_node->next != nullptr) {
-            tail_node = tail_node->next;
-        }
     }
     if (carry != 0) {
         // static_assert(tail_node != nullptr);
-       tail_node->next = new ListNode(carry);
+       tail->next = new ListNode(carry);
     }
-    return result;
+    return head;
   }
 };
